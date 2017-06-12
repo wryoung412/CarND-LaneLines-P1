@@ -11,12 +11,12 @@ We first convert the image to gray scale.
 ![original image](original.jpg)
 ![gray scale image](gray.jpg)
 
-For edge detection, we add mask for yellow and white pixels with the assumption that lanes are either yellow or white. This mask helps as the yellow lane might not have enough contrast when the road is bright. To segment the yellow pixels, we look at the image in the HSV space and create a mask in the range $()$ and $()$.
+For edge detection, we add mask for yellow and white pixels with the assumption that lanes are either yellow or white. This mask helps as the yellow lane might not have enough contrast when the road is bright. To segment the yellow pixels, we look at the image in the HSV space and create a mask in the range $(20, 50, 100)$ and $(80, 255, 255)$.
 
 ![HSV image](./hsv.jpg)
 ![yellow mask](./mask_yellow.jpg)
 
-Unfortunately, the white pixels are not easy to identify in the HSV space . To segment the white pixels, we look at the image in the HSL space (HLS in cv2) and create a mask in the range $()$ and $()$.
+Unfortunately, the white pixels are not easy to identify in the HSV space . To segment the white pixels, we look at the image in the HSL space (HLS in cv2) and create a mask in the range $(0, 200, 0)$ and $(255, 255, 255)$.
 
 ![HSL image](./hsl.jpg)
 ![white mask](./mask_white.jpg)
