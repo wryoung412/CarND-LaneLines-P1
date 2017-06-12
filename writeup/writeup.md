@@ -71,12 +71,16 @@ This pipeline estimates the left and right lanes separately. It could fail in th
 1. There is another car right in front or the car and lanes are blocked. One psssible improvement is to combine radar signals for lane estimation.
 2. The car is sitting on a lane. In this case, there could be three lanes of interest and the left and right separation assumption is no longer true. One possible fix is to fit multiple lanes jointly and fit multiple lines. The difficulty is that it is unclear how many lines we should fit and we need to handle multiple possible patterns simultaneously.
 
-### 3. The lines shake a lot as there is no smoothing across frames.
+### 3. Line fitting is sensitive to outliers.
+
+The fitted line could be affected by noise. For example, if there is a white car near by, there might be line segements on the car and the fitted line is biased. One possible improvement is to tune the Hough transform to select longer lines only. In practice, it might end up not finding any valid line segment. 
+
+### 4. The lines shake a lot as there is no smoothing across frames.
 
 One possible improvement is to take a time-decaying averages of the lines and draw these smoothed lines in the video. Let $\rho\in [0, 1]$ be the decaying parameter. Suppose the fitted line of the current frame is $x=a_1 y + b_1$ and the time-decaying average of the previous frame is $x = a_0 y + b_0$. Then the time-decaying average of the current frame is $x = ((1 - \rho) * a_1 + \rho * a_0) y + ((1 - \rho) * b_1 + \rho * b_0)$. 
 
 
-### 4. By relying on Hough transform, this method is only able to draw straight lines. It would be best if we could map out the curved lanes in the video challenge.mp4. 
+### 5. By relying on Hough transform, this method is only able to draw straight lines. It would be best if we could map out the curved lanes in the video challenge.mp4. 
 
 It is unclear how we can draw the curved lines easily. Drawing straight lines is probably a reasonable approximation for the lane detection purpose as we mostly only care about the lanes immediately in front of the car.
 
